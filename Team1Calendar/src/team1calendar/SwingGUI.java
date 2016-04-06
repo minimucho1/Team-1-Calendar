@@ -10,5 +10,5 @@ package team.pkg1.calendar;
  * @author JR
  */
 public class SwingGUI {
-    
+    // Grigoriys branch
 }
