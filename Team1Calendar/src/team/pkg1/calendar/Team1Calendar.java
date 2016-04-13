@@ -14,10 +14,15 @@ import javax.swing.*;
 
 public class Team1Calendar implements Runnable, ActionListener, MouseListener {
     
+    private JFrame frame;
+    private int current_day;
+    
     @Override
     public void run() {
         
-        JFrame frame = new JFrame("Very Cool Calendar");
+        current_day = 0;
+        
+        frame = new JFrame("Very Cool Calendar");
         frame.addMouseListener(this);
         JMenuBar menu_bar = new JMenuBar();
         
@@ -116,6 +121,7 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
         int day = (int)(xpos / 24) + (int)(ypos / 24) * 7 - 4;
         if(xpos < 168 && ypos < 144){
             System.out.println("Day selected: April " + day);
+            current_day = day;
         }
     }
 
@@ -163,6 +169,14 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
         // test menu actions
         JMenuItem source = (JMenuItem)(ae.getSource());
         System.out.println(source.getText());
+        if(source.getText().equals("Add Event")){
+            if(current_day == 0){
+                JOptionPane.showMessageDialog(frame, "Please select a day first", "Add Event", JOptionPane.WARNING_MESSAGE);
+            } else {
+                String event = (String)JOptionPane.showInputDialog(frame, "Enter the event's time in military time,\nfollowed by a description. Example:\n1200 Eat pills", "Add Event", JOptionPane.QUESTION_MESSAGE, null, null, "");
+                System.out.println(event.split(" ")[0]);
+            }
+        }
     }
     
     public static void main(String[] args) {
