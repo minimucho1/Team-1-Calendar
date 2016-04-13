@@ -120,7 +120,7 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
         int xpos = me.getX() - 16;
         int ypos = me.getY() - 109;
         int day = (int)(xpos / 24) + (int)(ypos / 24) * 7 - 4;
-        if(xpos < 168 && ypos < 144){
+        if(xpos < 168 && ypos < 144 && xpos >= 0 && ypos >= 0){
             System.out.println("Day selected: April " + day);
             current_day = day;
         }
@@ -140,14 +140,20 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
         public void paint(Graphics g){
             // Shape drawLine = new Line2D.Float(20, 90, 55, 250);
             giraffix = (Graphics2D)g;
-            giraffix.setFont(new Font("Arial", Font.BOLD, 14));
             giraffix.setPaint(Color.BLUE);
             giraffix.fill(new Rectangle2D.Float(0, 0, 184, 208));
+            giraffix.setFont(new Font("Trebuchet MS", Font.BOLD, 24));
+            giraffix.drawString("April " + current_day + " 2016", 200, 32);
             giraffix.setPaint(Color.WHITE);
+            giraffix.setFont(new Font("Arial", Font.BOLD, 14));
             giraffix.fill(new Rectangle2D.Float(8, 56, 168, 144));
-            giraffix.drawString("April " + current_day + " 2016", 8, 24);
+            giraffix.drawString("April 2016", 8, 24);
             giraffix.setPaint(new Color(100, 255, 100, 255));
-            giraffix.fill(new Rectangle2D.Float(104, 104, 24, 24));
+            giraffix.fill(new Rectangle2D.Float(104, 104, 24, 24)); // current day
+            if(current_day != 14){
+                giraffix.setPaint(new Color(255, 200, 0, 255));
+                giraffix.fill(new Rectangle2D.Float(((current_day + 4) % 7) * 24 + 8, (int)((current_day + 4) / 7) * 24 + 56, 24, 24)); // current selected day
+            }
             giraffix.setPaint(Color.BLACK);
             int i;
             // numbers
