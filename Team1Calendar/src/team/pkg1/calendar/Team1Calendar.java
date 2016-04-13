@@ -42,9 +42,9 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
         button_delete_event.addActionListener(this);
         edit_menu.add(button_delete_event);
         
-        JMenuItem button_modify_event = new JMenuItem("Modify Event");
-        button_modify_event.setMnemonic(KeyEvent.VK_M);
-        button_modify_event.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_M, ActionEvent.CTRL_MASK));
+        JMenuItem button_modify_event = new JMenuItem("Edit Event");
+        button_modify_event.setMnemonic(KeyEvent.VK_E);
+        button_modify_event.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
         button_modify_event.addActionListener(this);
         edit_menu.add(button_modify_event);
         
@@ -137,9 +137,12 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
         public void paint(Graphics g){
             // Shape drawLine = new Line2D.Float(20, 90, 55, 250);
             Graphics2D giraffix = (Graphics2D)g;
-            giraffix.setPaint(Color.ORANGE);
-            giraffix.setFont(new Font("Arial", Font.BOLD, 14)); 
+            giraffix.setFont(new Font("Arial", Font.BOLD, 14));
+            giraffix.setPaint(Color.BLUE);
+            giraffix.fill(new Rectangle2D.Float(0, 0, 184, 208));
+            giraffix.setPaint(Color.WHITE);
             giraffix.fill(new Rectangle2D.Float(8, 56, 168, 144));
+            giraffix.drawString("April 2016", 8, 24);
             giraffix.setPaint(Color.BLACK);
             int i;
             for(i = 0; i < 8; i ++){
@@ -160,7 +163,6 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
                 //giraffix.drawString(day, ((i + 4) % 7) * (640 / 7) + 10, (int)((i + 4) / 7) * (480 / 6) + 20);
                 giraffix.drawString(day, ((i + 4) % 7) * 24 + 13, (int)((i + 4) / 7) * 24 + 73);
             }
-            giraffix.drawString("April 2016", 8, 24);
         }
     }
     
@@ -169,13 +171,37 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
         // test menu actions
         JMenuItem source = (JMenuItem)(ae.getSource());
         System.out.println(source.getText());
-        if(source.getText().equals("Add Event")){
-            if(current_day == 0){
-                JOptionPane.showMessageDialog(frame, "Please select a day first", "Add Event", JOptionPane.WARNING_MESSAGE);
-            } else {
-                String event = (String)JOptionPane.showInputDialog(frame, "Enter the event's time in military time,\nfollowed by a description. Example:\n1200 Eat pills", "Add Event", JOptionPane.QUESTION_MESSAGE, null, null, "");
-                System.out.println(event.split(" ")[0]);
-            }
+        switch(source.getText()){
+            case "Add Event":
+                if(current_day == 0){
+                    JOptionPane.showMessageDialog(frame, "Please select a day first", "Add Event", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    String event = (String)JOptionPane.showInputDialog(frame, "Enter the event's time in military time,\nfollowed by a description. Example:\n1200 Eat pills", "Add Event", JOptionPane.QUESTION_MESSAGE, null, null, "");
+                    System.out.println(event.split(" ")[0]);
+                }
+                break;
+            case "Delete Event":
+                if(current_day == 0){
+                    JOptionPane.showMessageDialog(frame, "Please select a day first", "Delete Event", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    int response = JOptionPane.showConfirmDialog(frame, "Are you sure you want to delete the event?", "Delete Event", JOptionPane.YES_NO_OPTION);
+                    System.out.println(response);
+                    if(response == 0){
+                        System.out.println("Event at April " + current_day + " would be deleted");
+                        JOptionPane.showMessageDialog(frame, "The event has been deleted", "Delete Event", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+                break;
+            case "Edit Event":
+                if(current_day == 0){
+                    JOptionPane.showMessageDialog(frame, "Please select a day first", "Edit Event", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    String event = (String)JOptionPane.showInputDialog(frame, "Enter the event's new time in military time,\nfollowed by a description. Example:\n1200 Eat pills", "Edit Event", JOptionPane.QUESTION_MESSAGE, null, null, "???? old event data here");
+                    System.out.println(event.split(" ")[0]);
+                }
+                break;
+            default:
+                break;
         }
     }
     
