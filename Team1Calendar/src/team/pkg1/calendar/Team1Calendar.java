@@ -2,6 +2,7 @@ package team.pkg1.calendar;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Shape;
@@ -88,7 +89,7 @@ public class Team1Calendar implements Runnable, ActionListener {
         */
         
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(640, 480);
+        frame.setSize(800, 600);
         frame.setJMenuBar(menu_bar);
         frame.add(new Giraffix(), BorderLayout.CENTER);
         frame.setVisible(true);
@@ -99,17 +100,16 @@ public class Team1Calendar implements Runnable, ActionListener {
         public void paint(Graphics g){
             // Shape drawLine = new Line2D.Float(20, 90, 55, 250);
             Graphics2D giraffix = (Graphics2D)g;
-            giraffix.setPaint(Color.WHITE);
-            giraffix.fill(new Rectangle2D.Float(0, 0, 640, 480));
+            giraffix.setPaint(Color.ORANGE);
+            giraffix.setFont(new Font("Arial", Font.BOLD, 14)); 
+            giraffix.fill(new Rectangle2D.Float(8, 56, 168, 144));
             giraffix.setPaint(Color.BLACK);
-            int i, coord;
-            for(i = 1; i <= 5; i ++){
-                coord = i * (480 / 6);
-                giraffix.draw(new Line2D.Float(0, coord, 640, coord));
+            int i;
+            for(i = 0; i < 8; i ++){
+                giraffix.draw(new Line2D.Float(i * 24 + 8, 56, i * 24 + 8, 200));
             }
-            for(i = 1; i <= 6; i ++){
-                coord = i * (640 / 7);
-                giraffix.draw(new Line2D.Float(coord, 0, coord, 480));
+            for(i = 0; i < 7; i ++){
+                giraffix.draw(new Line2D.Float(8, i * 24 + 56, 176, i * 24 + 56));
             }
             String day;
             for(i = -4; i <= 37; i ++){
@@ -120,8 +120,10 @@ public class Team1Calendar implements Runnable, ActionListener {
                 if(i > 30){
                     day = "" + (i - 30);
                 }
-                giraffix.drawString(day, ((i + 4) % 7) * (640 / 7) + 10, (int)((i + 4) / 7) * (480 / 6) + 20);
+                //giraffix.drawString(day, ((i + 4) % 7) * (640 / 7) + 10, (int)((i + 4) / 7) * (480 / 6) + 20);
+                giraffix.drawString(day, ((i + 4) % 7) * 24 + 13, (int)((i + 4) / 7) * 24 + 73);
             }
+            giraffix.drawString("April 2016", 8, 24);
         }
     }
     
