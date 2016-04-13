@@ -5,17 +5,20 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.Point;
 import java.awt.Shape;
 import java.awt.event.*;
 import java.awt.geom.*;
 import javax.swing.*;
 
-public class Team1Calendar implements Runnable, ActionListener {
-
+public class Team1Calendar implements Runnable, ActionListener, MouseListener {
+    
     @Override
     public void run() {
         
-        JFrame frame = new JFrame("Team 1 Calendar");
+        JFrame frame = new JFrame("Very Cool Calendar");
+        frame.addMouseListener(this);
         JMenuBar menu_bar = new JMenuBar();
         
         JMenu edit_menu = new JMenu("Edit");
@@ -91,9 +94,37 @@ public class Team1Calendar implements Runnable, ActionListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setJMenuBar(menu_bar);
-        frame.add(new Giraffix(), BorderLayout.CENTER);
+        Giraffix graphics = new Giraffix();
+        frame.add(graphics, BorderLayout.CENTER);
         frame.setVisible(true);
         
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent me) {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent me) {
+        // width = 168, height = 144
+        int xpos = me.getX() - 16;
+        int ypos = me.getY() - 109;
+        int day = (int)(xpos / 24) + (int)(ypos / 24) * 7 - 4;
+        if(xpos < 168 && ypos < 144){
+            System.out.println("Day selected: April " + day);
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent me) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent me) {
     }
     
     private class Giraffix extends JComponent {
