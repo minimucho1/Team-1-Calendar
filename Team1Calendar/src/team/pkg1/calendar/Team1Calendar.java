@@ -16,11 +16,12 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
     
     private JFrame frame;
     private int current_day;
+    Giraffix graphics;
     
     @Override
     public void run() {
         
-        current_day = 0;
+        current_day = 14;
         
         frame = new JFrame("Very Cool Calendar");
         frame.addMouseListener(this);
@@ -99,7 +100,7 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 600);
         frame.setJMenuBar(menu_bar);
-        Giraffix graphics = new Giraffix();
+        graphics = new Giraffix();
         frame.add(graphics, BorderLayout.CENTER);
         frame.setVisible(true);
         
@@ -123,6 +124,7 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
             System.out.println("Day selected: April " + day);
             current_day = day;
         }
+        graphics.repaint();
     }
 
     @Override
@@ -134,23 +136,21 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
     }
     
     private class Giraffix extends JComponent {
+        private Graphics2D giraffix;
         public void paint(Graphics g){
             // Shape drawLine = new Line2D.Float(20, 90, 55, 250);
-            Graphics2D giraffix = (Graphics2D)g;
+            giraffix = (Graphics2D)g;
             giraffix.setFont(new Font("Arial", Font.BOLD, 14));
             giraffix.setPaint(Color.BLUE);
             giraffix.fill(new Rectangle2D.Float(0, 0, 184, 208));
             giraffix.setPaint(Color.WHITE);
             giraffix.fill(new Rectangle2D.Float(8, 56, 168, 144));
-            giraffix.drawString("April 2016", 8, 24);
+            giraffix.drawString("April " + current_day + " 2016", 8, 24);
+            giraffix.setPaint(new Color(100, 255, 100, 255));
+            giraffix.fill(new Rectangle2D.Float(104, 104, 24, 24));
             giraffix.setPaint(Color.BLACK);
             int i;
-            for(i = 0; i < 8; i ++){
-                giraffix.draw(new Line2D.Float(i * 24 + 8, 56, i * 24 + 8, 200));
-            }
-            for(i = 0; i < 7; i ++){
-                giraffix.draw(new Line2D.Float(8, i * 24 + 56, 176, i * 24 + 56));
-            }
+            // numbers
             String day;
             for(i = -4; i <= 37; i ++){
                 day = "" + i;
@@ -160,8 +160,20 @@ public class Team1Calendar implements Runnable, ActionListener, MouseListener {
                 if(i > 30){
                     day = "" + (i - 30);
                 }
+                if(i < 1 || i > 30){
+                    giraffix.setColor(new Color(180, 180, 180, 255));
+                    giraffix.fill(new Rectangle2D.Float(((i + 4) % 7) * 24 + 8, (int)((i + 4) / 7) * 24 + 56, 24, 24));
+                    giraffix.setColor(Color.BLACK);
+                }
                 //giraffix.drawString(day, ((i + 4) % 7) * (640 / 7) + 10, (int)((i + 4) / 7) * (480 / 6) + 20);
                 giraffix.drawString(day, ((i + 4) % 7) * 24 + 13, (int)((i + 4) / 7) * 24 + 73);
+            }
+            // grid
+            for(i = 0; i < 8; i ++){
+                giraffix.draw(new Line2D.Float(i * 24 + 8, 56, i * 24 + 8, 200));
+            }
+            for(i = 0; i < 7; i ++){
+                giraffix.draw(new Line2D.Float(8, i * 24 + 56, 176, i * 24 + 56));
             }
         }
     }
